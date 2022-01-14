@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    "lib": [ "es6", "dom", "scripthost", "DOM.Iterable" ],
+    //  [ "es6", "dom", "es2017", "esnext" ],
+
+    "module": "esnext", //"esnext",
+    "target": "esnext",
+
+    // WARNINGS
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noImplicitReturns": true,
+    "noUnusedParameters": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "alwaysStrict": true,
+    "noUnusedLocals": true,
+
+    "outDir": "../../out/client",
+
+    "sourceMap": true,
+
+    "typeRoots": [
+      "node_modules/@types",
+      "node_module/phaser/types"
+    ],
+    "types": [
+      "Phaser", "socket.io" //"jquery"
+    ],
+
+    "moduleResolution": "node",
+    "composite": true
+
+  },
+
+  /*"typeAcquisition": {
+    "include": ["jquery"]
+  }*/
+}

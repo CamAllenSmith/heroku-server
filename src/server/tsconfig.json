@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+    "lib": [ "esnext" ], 
+    "module": "commonjs", 
+    "target": "esnext",
+
+    // WARNINGS
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noImplicitReturns": true,
+    "noUnusedParameters": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "alwaysStrict": true,
+    "noUnusedLocals": true,
+
+    "outDir": "../../out/server",
+
+    "sourceMap": true,
+
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "types": [ "node", "socket.io" ],
+
+    "composite": true
+
+  }
+}
