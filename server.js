@@ -7,20 +7,35 @@ const io = new Server(server);
 
 const port = process.env.PORT || 3000
 
+const paths = {
+    "/": __dirname + "/index.html",
+    "/rtc.js": __dirname + "/rtc.js",
+    "/style.css": __dirname + "/style.css"
+};
+for (let p in paths) {
+    let path = paths[p];
+    app.get(p, (req, res) => res.sendFile(path));
+}
 
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
-});
 
 io.on('connection', (socket) => {
     console.log('a user connected');
 
-    socket.broadcast.emit('hi');
+    //socket.broadcast.emit('hi');
 
+    socket.on("room", room => {
+        console.log("joining room: ", room);
+        socket.join(room);
+    })
 
-    socket.on('chat message', (msg) => {
-        io.emit('chat message', msg);
-    });
+    const relay_events = ["offer", "candidate", "answer"];
+    for (let event of relay_events) {
+        socket.on(event, (room_id, msg) => {
+            console.log("[" + event + "]", { room_id: room_id, msg: msg });
+            socket.to(room_id).emit(event, msg);
+        });
+    }
+
 
     socket.on('disconnect', () => {
         console.log('user disconnected');
