@@ -1,12 +1,33 @@
+const express = require('express');
+const app = express();
 const http = require('http');
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
+
 const port = process.env.PORT || 3000
 
-const server = http.createServer((req, res) => {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/html');
-    res.end('<h1>Hello World</h1>');
+
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/index.html');
 });
 
-server.listen(port,() => {
-    console.log(`Server running at port `+port);
+io.on('connection', (socket) => {
+    console.log('a user connected');
+
+    socket.broadcast.emit('hi');
+
+
+    socket.on('chat message', (msg) => {
+        io.emit('chat message', msg);
+    });
+
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
+    });
 });
+
+server.listen(port, () => {
+    console.log('listening on *:' + port);
+});
+
